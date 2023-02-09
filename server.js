@@ -34,18 +34,13 @@ app.post("/api/movies", async (req, res) => {
         res.status(500).json({message: err});
     }
 });
-app.get("/api/movies", async (req, res) => {
-    if(req.query.page && req.query.perPage){
-        try{
-            let data = await db.getAllMovies(req.query.page, req.query.perPage, req.query.title);
-            res.json(data);
-        }catch(err){
-            res.status(500).json({message: err});
-        }
-    }
-    else{
-        res.status(400);
-    }   
+app.get("/api/movies", async (req, res) => {    
+    try{
+        let data = await db.getAllMovies(req.query.page, req.query.perPage, req.query.title);
+        res.json(data);
+    }catch(err){
+        res.status(500).json({message: err.message});
+    }         
 });
 app.get("/api/movies/:_id", async (req, res) => {
     try {
